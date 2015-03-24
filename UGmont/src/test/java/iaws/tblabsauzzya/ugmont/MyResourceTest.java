@@ -1,4 +1,4 @@
-package iaws.tblabsauzzya;
+package iaws.tblabsauzzya.ugmont;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -25,7 +25,7 @@ public class MyResourceTest {
 
         // uncomment the following line if you want to enable
         // support for JSON in the client (you also have to uncomment
-        // dependency on jersey-media-json module in pom.xml and GrizzlyServerEntryPoint.startServer())
+        // dependency on jersey-media-json module in pom.xml and Main.startServer())
         // --
         // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
 

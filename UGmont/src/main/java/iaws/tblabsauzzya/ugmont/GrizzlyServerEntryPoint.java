@@ -1,6 +1,5 @@
-package iaws.tblabsauzzya;
+package iaws.tblabsauzzya.ugmont;
 
-import com.sun.jersey.api.json.JSONConfiguration;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;

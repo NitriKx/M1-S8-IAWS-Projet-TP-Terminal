@@ -1,4 +1,4 @@
-package iaws.tblabsauzzya;
+package iaws.tblabsauzzya.ugmont;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

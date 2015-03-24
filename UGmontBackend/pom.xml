@@ -4,10 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>iaws.tblabsauzzya</groupId>
-    <artifactId>UGmontProjet</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>UGmontBackendProject</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>UGmontProjet</name>
+    <packaging>jar</packaging>
+    <name>UGmontBackendProject</name>
+    <url>http://maven.apache.org</url>
 
 
     <!--                                                     -->
@@ -16,11 +17,9 @@
     <!--                                                     -->
     <!--                                                     -->
 
-
     <properties>
         <slf4j.version>1.7.10</slf4j.version>
         <logback.version>1.1.2</logback.version>
-        <jersey.version>2.17</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -34,35 +33,17 @@
     <!--                                                     -->
 
     <build>
+        <finalName>CobarProject</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <inherited>true</inherited>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>iaws.tblabsauzzya.ugmont.Main</mainClass>
+                    <source>1.5</source>
+                    <target>1.5</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 
 
 
@@ -73,30 +54,13 @@
     <!--                                                     -->
     <!--                                                     -->
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.glassfish.jersey</groupId>
-                <artifactId>jersey-bom</artifactId>
-                <version>${jersey.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
-
 
         <!--       LIBRAIRIE DE LOGGING       -->
         <dependency>
@@ -123,9 +87,14 @@
             <version>1.7.10</version>
         </dependency>
 
+        <!--       GOOGLE GUICE - FRAMEWORK VERY USEFUL TO TEST THE DATABASE       -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0</version>
+        </dependency>
+
     </dependencies>
-
-
 
 
 
@@ -166,4 +135,5 @@
             </plugin>
         </plugins>
     </reporting>
+
 </project>
