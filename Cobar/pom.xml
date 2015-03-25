@@ -7,7 +7,7 @@
     <artifactId>CobarProject</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>CobarProject Spring-WS Application</name>
+    <name>CobarProject</name>
     <url>http://www.springframework.org/spring-ws</url>
 
     <parent>
