@@ -1,5 +1,7 @@
 package iaws.tblabsauzzya.ugmont;
 
+import com.google.inject.Guice;
+import iaws.tblabsauzzya.ugmont.config.ConfigurationHolder;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;

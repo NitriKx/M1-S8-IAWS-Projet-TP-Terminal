@@ -9,6 +9,11 @@
     <version>1.0-SNAPSHOT</version>
     <name>UGmontProjet</name>
 
+    <parent>
+        <groupId>iaws.tblabsauzzya</groupId>
+        <artifactId>IAWS-Projet</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
     <!--                                                     -->
     <!--                                                     -->
@@ -18,9 +23,9 @@
 
 
     <properties>
+        <jersey.version>2.17</jersey.version>
         <slf4j.version>1.7.10</slf4j.version>
         <logback.version>1.1.2</logback.version>
-        <jersey.version>2.17</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -57,7 +62,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>iaws.tblabsauzzya.ugmont.Main</mainClass>
+                    <mainClass>iaws.tblabsauzzya.ugmont.GrizzlyServerEntryPoint</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -86,17 +91,32 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>iaws.tblabsauzzya</groupId>
+            <artifactId>IAWS-Projet</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--       PROJET COMMUN      -->
+        <dependency>
+            <groupId>iaws.tblabsauzzya</groupId>
+            <artifactId>UGmontBackendProject</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
 
         <!--       LIBRAIRIE DE LOGGING       -->
         <dependency>
@@ -123,10 +143,20 @@
             <version>1.7.10</version>
         </dependency>
 
+        <!--       GOOGLE GUICE - FRAMEWORK UTILE POUR LE TEST       -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+        <!--       UTILISE POUR GÉRER DES FICHIERS DE CONFIGURATION       -->
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.6</version>
+        </dependency>
     </dependencies>
-
-
-
 
 
     <!--                                                     -->
@@ -166,4 +196,5 @@
             </plugin>
         </plugins>
     </reporting>
+    
 </project>

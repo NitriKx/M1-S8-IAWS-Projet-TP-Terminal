@@ -10,6 +10,12 @@
     <name>UGmontBackendProject</name>
     <url>http://maven.apache.org</url>
 
+    <parent>
+        <groupId>iaws.tblabsauzzya</groupId>
+        <artifactId>IAWS-Projet</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
 
     <!--                                                     -->
     <!--                                                     -->
@@ -33,7 +39,7 @@
     <!--                                                     -->
 
     <build>
-        <finalName>CobarProject</finalName>
+        <finalName>UGmontBackendProject</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -56,9 +62,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>iaws.tblabsauzzya</groupId>
+            <artifactId>IAWS-Projet</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
 
@@ -87,15 +99,20 @@
             <version>1.7.10</version>
         </dependency>
 
-        <!--       GOOGLE GUICE - FRAMEWORK VERY USEFUL TO TEST THE DATABASE       -->
+        <!--       GOOGLE GUICE - FRAMEWORK UTILE POUR LE TEST       -->
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>3.0</version>
         </dependency>
 
+        <!--       UTILISE POUR GÉRER DES FICHIERS DE CONFIGURATION       -->
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.6</version>
+        </dependency>
     </dependencies>
-
 
 
     <!--                                                     -->
