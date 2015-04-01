@@ -45,4 +45,10 @@ public class MyResourceTest {
         String responseMsg = target.path("myresource").request().get(String.class);
         assertEquals("Got it!", responseMsg);
     }
+
+    @Test
+    public void testFilm() {
+        String responseMsg = target.path("film/recherche").request().get(String.class);
+        assertEquals("true", responseMsg);
+    }
 }
