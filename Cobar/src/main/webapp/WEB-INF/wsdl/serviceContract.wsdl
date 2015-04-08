@@ -50,7 +50,7 @@
     
     <wsdl:service name="SearchService">
         <wsdl:port name="SearchPort" binding="TheatreSearchPortBinding">
-            <soap:address location="http://localhost:8080/M1-S8-IAWS-Projet-Terminal/Cobar/main"/>
+            <soap:address location="http://localhost:8080/SearchService"/>
         </wsdl:port>
     </wsdl:service>
 
