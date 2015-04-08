@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:prj="http://projectCobart/namespace"
+        elementFormDefault="qualified"
+        targetNamespace="http://projectCobart/namespace">
+
+	<xsd:element name="MovieTheatreListRequest">
+		<xsd:complexType>
+			<xsd:all>
+				<xsd:element name="Theatre" type="prj:TheatreType" />
+				<xsd:element name="Movie" type="prj:MovieType" />
+			</xsd:all>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="MovieType">
+		<xsd:all>
+			<xsd:element name="Title" type="xsd:string" />
+			<xsd:element name="Year" type="xsd:gYear" />
+		</xsd:all>
+		<xsd:attribute name="id" type="xsd:ID" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="TheatreType">
+		<xsd:all>
+			<xsd:element name="Name" type="xsd:string" />
+			<xsd:element name="Adresse" type="xsd:string" />
+			<xsd:element name="City" type="xsd:string" />
+		</xsd:all>
+	</xsd:complexType>
+
+</xsd:schema>
