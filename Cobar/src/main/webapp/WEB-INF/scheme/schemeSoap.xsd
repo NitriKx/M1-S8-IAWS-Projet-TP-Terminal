@@ -5,22 +5,23 @@
         elementFormDefault="qualified"
         targetNamespace="http://projectCobart/namespace">
 
-	<xsd:element name="MovieTheatreListRequest">
+	<xsd:element name="Movie">
 		<xsd:complexType>
 			<xsd:all>
-				<xsd:element name="Theatre" type="prj:TheatreType" />
-				<xsd:element name="Movie" type="prj:MovieType" />
+				<xsd:element name="Title" type="xsd:string" />
+				<xsd:element name="Year" type="xsd:gYear" />
 			</xsd:all>
+			<xsd:attribute name="id" type="xsd:integer"/>
 		</xsd:complexType>
 	</xsd:element>
 
-	<xsd:complexType name="MovieType">
-		<xsd:all>
-			<xsd:element name="Title" type="xsd:string" />
-			<xsd:element name="Year" type="xsd:gYear" />
-		</xsd:all>
-		<xsd:attribute name="id" type="xsd:ID" use="required" />
-	</xsd:complexType>
+	<xsd:element name="TheatreList">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Theatre" type="prj:TheatreType" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
 
 	<xsd:complexType name="TheatreType">
 		<xsd:all>

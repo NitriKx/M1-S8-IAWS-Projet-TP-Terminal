@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:schema="http://projectCobart/namespace"
+                  xmlns:tns="http://mycompany.com/hr/definitions"
+                  targetNamespace="http://mycompany.com/hr/definitions">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://projectCobart/namespace" schemaLocation="../scheme/schemeSoap.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="MovieTheatreListRequest">
+        <wsdl:part element="schema:Movie" name="MovieParam"/>
+    </wsdl:message>
+
+    <wsdl:message name="MovieTheatreListResponse">
+        <wsdl:part element="schema:TheatreList" name="MovieListResult"/>
+    </wsdl:message>
+
+
+    <wsdl:portType name="TheatreSearch">
+
+        <wsdl:operation name="GetListTheatre">
+            <wsdl:input message="tns:MovieTheatreListRequest"/>
+            <wsdl:output message="tns:MovieTheatreListResponse"/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:binding name="TheatreSearchPortBinding" type="tns:TheatreSearch">
+
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="GetListTheatre">
+
+            <soap:operation soapAction=""/>
+            <wsdl:input name="MovieTheatreListRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+
+            <wsdl:output name="MovieTheatreListResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+
+        </wsdl:operation>
+
+    </wsdl:binding>
+    
+    <wsdl:service name="SearchService">
+        <wsdl:port name="SearchPort" binding="TheatreSearchPortBinding">
+            <soap:address location="http://localhost:8080/M1-S8-IAWS-Projet-Terminal/Cobar/main"/>
+        </wsdl:port>
+    </wsdl:service>
+
+
+
+</wsdl:definitions>
