@@ -18,7 +18,9 @@ public class TheatreSearchEndpoint {
     @ResponsePayload
     public Element theatreListRequest(@RequestPayload Element movie) {
 
+        //temp
         Element theatreList = movie;
+        //requête vers l'API REST
 
         return theatreList;
     }
