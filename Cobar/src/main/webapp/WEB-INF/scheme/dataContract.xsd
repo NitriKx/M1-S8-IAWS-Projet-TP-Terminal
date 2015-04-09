@@ -18,12 +18,12 @@
 	<xsd:element name="TheatreList">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="Theatre" type="prj:TheatreType" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element name="Theatre" type="prj:Theatre" minOccurs="0" maxOccurs="unbounded" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 
-	<xsd:complexType name="TheatreType">
+	<xsd:complexType name="Theatre">
 		<xsd:all>
 			<xsd:element name="Name" type="xsd:string" />
 			<xsd:element name="Adresse" type="xsd:string" />

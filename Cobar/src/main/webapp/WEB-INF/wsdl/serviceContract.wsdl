@@ -3,19 +3,19 @@
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                   xmlns:schema="http://projectCobart/namespace"
-                  xmlns:tns="http://mycompany.com/hr/definitions"
-                  targetNamespace="http://mycompany.com/hr/definitions">
+                  xmlns:tns="Mynamespace"
+                  targetNamespace="Mynamespace">
     <wsdl:types>
         <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <xsd:import namespace="http://projectCobart/namespace" schemaLocation="../scheme/schemeSoap.xsd"/>
+            <xsd:import namespace="http://projectCobart/namespace" schemaLocation="../scheme/dataContract.xsd"/>
         </xsd:schema>
     </wsdl:types>
 
-    <wsdl:message name="MovieTheatreListRequest">
+    <wsdl:message name="theatreListRequest">
         <wsdl:part element="schema:Movie" name="MovieParam"/>
     </wsdl:message>
 
-    <wsdl:message name="MovieTheatreListResponse">
+    <wsdl:message name="theatreListResponse">
         <wsdl:part element="schema:TheatreList" name="MovieListResult"/>
     </wsdl:message>
 
@@ -23,8 +23,8 @@
     <wsdl:portType name="TheatreSearch">
 
         <wsdl:operation name="GetListTheatre">
-            <wsdl:input message="tns:MovieTheatreListRequest"/>
-            <wsdl:output message="tns:MovieTheatreListResponse"/>
+            <wsdl:input message="tns:theatreListRequest"/>
+            <wsdl:output message="tns:theatreListResponse"/>
         </wsdl:operation>
 
     </wsdl:portType>
