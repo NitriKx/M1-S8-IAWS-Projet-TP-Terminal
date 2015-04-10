@@ -50,7 +50,7 @@
     
     <wsdl:service name="SearchService">
         <wsdl:port name="SearchPort" binding="TheatreSearchPortBinding">
-            <soap:address location="http://localhost:8080/SearchService"/>
+            <soap:address location="localhost:8080/mywebapp/SearchService"/>
         </wsdl:port>
     </wsdl:service>
 

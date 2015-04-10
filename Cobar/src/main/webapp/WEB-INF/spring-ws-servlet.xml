@@ -7,5 +7,8 @@
 
     <sws:annotation-driven/>
 
+    <sws:static-wsdl
+            id="TheatresSearch"
+            location="/WEB-INF/wsdl/serviceContract.wsdl"/>
 
 </beans>

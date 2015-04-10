@@ -20,15 +20,15 @@ public class TheatreSearchEndpoint {
 
 
     public static final String NAMESPACE = "http://projectCobart/namespace";
-    private final UGmontBackendService service;
+    private final UGmontBackendService service = UGmontBackendService.getInstance();
 
     /**
      *
      */
-    @Autowired
-    public TheatreSearchEndpoint() {
+    //@Autowired
+    /*public TheatreSearchEndpoint() {
         service = UGmontBackendService.getInstance();
-    }
+    }*/
 
     /**
      * @param movie
