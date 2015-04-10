@@ -1,18 +1,15 @@
 package iaws.tblabsauzzya.cobar;
 
+import iaws.tblabsauzzya.ugmont.model.Theatre;
+import iaws.tblabsauzzya.ugmont.service.UGmontBackendService;
 import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.List;
 
 /**
  * Created by Abel on 09/04/15.
@@ -23,34 +20,61 @@ public class TheatreSearchEndpoint {
 
 
     public static final String NAMESPACE = "http://projectCobart/namespace";
+    private final UGmontBackendService service;
 
+    /**
+     *
+     */
+    @Autowired
+    public TheatreSearchEndpoint() {
+        service = UGmontBackendService.getInstance();
+    }
+
+    /**
+     * @param movie
+     * @return theatreList
+     */
     @PayloadRoot(localPart = "Movie", namespace = NAMESPACE)
     @ResponsePayload
-    public Element theatreListRequest(@RequestPayload Element movie) throws JAXBException, IOException, JDOMException {
+    public Element theatreListRequest(@RequestPayload Element movie) {
 
-        Element theatreList = null;
+        Element theatreList = new Element("TheatreList", NAMESPACE);
 
-        // To revise
-        String uri = "http://localhost:8080/myapp/"+movie.getAttributeValue("id");
-        URL url = new URL(uri);
+        int id = Integer.parseInt(movie.getChild("Id").getText());
+        List<Theatre> response = service.getListTheatres(id);
 
-        //Request to the REST API
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Accept", "application/xml");
-
-        //building jdom document from inputStream
-        SAXBuilder sb = new SAXBuilder();
-        InputStream xml = connection.getInputStream();
-        sb.build(xml);
-
-        //need to parse Element from jdom document
-        //theatreList =
-
-
-        connection.disconnect();
-
+        for(int i = 0; i<response.size(); i++) {
+            Element theatre = buildElement(response.get(i),NAMESPACE);
+            theatreList.addContent(theatre);
+        }
 
         return theatreList;
+    }
+
+    /**
+     * @param t
+     * @param uri
+     * @return
+     */
+    private Element buildElement(Theatre t, String uri) {
+
+        //Creation elements
+        Element theatre = new Element("Theatre", uri);
+        Element name = new Element("Name");
+        Element adresse = new Element("Adresse");
+        Element city = new Element("City");
+
+        //setting content
+        name.setText(t.getName());
+        adresse.setText(t.getAdresse());
+        city.setText(t.getCity());
+
+        //building hierarchy
+        theatre.addContent(name);
+        theatre.addContent(adresse);
+        theatre.addContent(city);
+
+        return theatre;
+
     }
 }

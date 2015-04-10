@@ -16,7 +16,7 @@
     </wsdl:message>
 
     <wsdl:message name="theatreListResponse">
-        <wsdl:part element="schema:TheatreList" name="MovieListResult"/>
+        <wsdl:part element="schema:TheatreList" name="TheatreListResult"/>
     </wsdl:message>
 
 

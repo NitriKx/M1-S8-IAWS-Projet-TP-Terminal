@@ -8,26 +8,24 @@
 	<xsd:element name="Movie">
 		<xsd:complexType>
 			<xsd:all>
-				<xsd:element name="Title" type="xsd:string" />
-				<xsd:element name="Year" type="xsd:gYear" />
+				<xsd:element name="Id" type="xsd:integer" />
 			</xsd:all>
-			<xsd:attribute name="id" type="xsd:integer"/>
 		</xsd:complexType>
 	</xsd:element>
 
 	<xsd:element name="TheatreList">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="Theatre" type="prj:Theatre" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element name="Theatre" type="prj:TheatreType" minOccurs="0" maxOccurs="unbounded" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 
-	<xsd:complexType name="Theatre">
+	<xsd:complexType name="TheatreType">
 		<xsd:all>
 			<xsd:element name="Name" type="xsd:string" />
 			<xsd:element name="Adresse" type="xsd:string" />
-			<xsd:element name="City" type="xsd:string" />
+			<xsd:element name="Year" type="xsd:gYear" />
 		</xsd:all>
 	</xsd:complexType>
 

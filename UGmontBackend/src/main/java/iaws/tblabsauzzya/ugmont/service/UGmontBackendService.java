@@ -1,9 +1,14 @@
 package iaws.tblabsauzzya.ugmont.service;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
+import iaws.tblabsauzzya.ugmont.model.Theatre;
 import iaws.tblabsauzzya.ugmont.service.database.IUGmontDatabaseClient;
 import iaws.tblabsauzzya.ugmont.service.database.UGmontH2DatabaseClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Benoît Sauvère on 25/03/15.
@@ -23,6 +28,9 @@ public class UGmontBackendService {
         return "ok";
     }
 
+    public List<Theatre> getListTheatres(int id) {
+        return new ArrayList<Theatre>();
+    }
 
 
     //
