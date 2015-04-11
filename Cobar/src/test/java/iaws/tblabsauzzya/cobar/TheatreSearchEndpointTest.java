@@ -1,5 +1,8 @@
 package iaws.tblabsauzzya.cobar;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -7,4 +10,15 @@ import static org.junit.Assert.*;
  */
 public class TheatreSearchEndpointTest {
 
+
+    @Before
+    public void setUp() throws Exception {
+
+    }
+
+    @Test
+    public void testTheatreListRequest() throws Exception {
+        assert(true);
+
+    }
 }

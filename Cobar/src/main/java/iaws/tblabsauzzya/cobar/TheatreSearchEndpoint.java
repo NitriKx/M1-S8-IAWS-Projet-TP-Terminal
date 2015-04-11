@@ -3,7 +3,6 @@ package iaws.tblabsauzzya.cobar;
 import iaws.tblabsauzzya.ugmont.model.Theatre;
 import iaws.tblabsauzzya.ugmont.service.UGmontBackendService;
 import org.jdom.Element;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
