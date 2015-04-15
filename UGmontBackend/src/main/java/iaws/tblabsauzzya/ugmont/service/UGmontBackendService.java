@@ -64,6 +64,18 @@ public class UGmontBackendService {
 
     /**
      *
+     * @param salleContenantCriteres Un objet salle contenant les critères à rechercher. Mettre les attributs à null si pas utilisé pour la recherche.
+     *                               L'identifiant contenu dans l'objet salle sera ignoré.
+     * @return La liste des salles correspondant aux critères
+     * @throws SQLException
+     */
+    public Set<Salle> rechercheSalleAvecCritere(Salle salleContenantCriteres) throws SQLException {
+
+        return databaseClient.rechercheSalleAvecCriteres(salleContenantCriteres);
+    }
+
+    /**
+     *
      * @param id
      * @return
      */

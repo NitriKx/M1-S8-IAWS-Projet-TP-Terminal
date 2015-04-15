@@ -22,7 +22,7 @@ public interface IUGmontDatabaseClient {
      * @param salleAvecCriteres La salle à rechercher. Mettre les attribus ignorés à null
      * @return La liste des salles correspondant à tout les critères
      */
-    public List<Salle> rechercheSalleAvecCriteres(Salle salleAvecCriteres);
+    public Set<Salle> rechercheSalleAvecCriteres(Salle salleAvecCriteres) throws SQLException;
 
     /**
      * Créer une nouvelle association entre un salle et un film

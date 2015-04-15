@@ -106,8 +106,61 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
     /**
      * {@inheritDoc}
      */
-    public List<Salle> rechercheSalleAvecCriteres(Salle salleAvecCriteres) {
-        return null;
+    public Set<Salle> rechercheSalleAvecCriteres(Salle salleAvecCriteres) throws SQLException {
+
+        // Contruction de la requête de recherche
+
+        StringBuffer requeteRecherche = new StringBuffer();
+        requeteRecherche.append("SELECT * FROM SALLES WHERE 1 = 1");
+
+        if (salleAvecCriteres.capacite != null) {
+            requeteRecherche.append(" AND capacite >= " + salleAvecCriteres.capacite);
+        }
+
+        if (salleAvecCriteres.isIMAX != null) {
+            requeteRecherche.append(" AND isIMAX = " + salleAvecCriteres.isIMAX);
+        }
+
+        if (salleAvecCriteres.is3D != null) {
+            requeteRecherche.append(" AND is3D = " + salleAvecCriteres.is3D);
+        }
+
+        PreparedStatement rechercheSalleAvecCriteresPreparedStatement = dbConn.prepareStatement(requeteRecherche.toString());
+
+        if (!rechercheSalleAvecCriteresPreparedStatement.execute()) {
+            throw new RuntimeException("Impossible d'exécuter la requête de recherche des salles par critères");
+        }
+
+        // Convertit la liste des resultats en objets salles
+        Set<Salle> result = new LinkedHashSet<Salle>();
+        ResultSet listeDesResultatRecherche = null;
+        try {
+            listeDesResultatRecherche = rechercheSalleAvecCriteresPreparedStatement.getResultSet();
+
+            while (listeDesResultatRecherche.next()) {
+                result.add(creerSalleAPartirResultSet(listeDesResultatRecherche));
+            }
+            return result;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Impossible de créer la liste des salles à partir du résultat de la requête de recherche", e);
+
+
+        } finally {
+            try {
+                if (listeDesResultatRecherche != null) {
+                    listeDesResultatRecherche.close();
+                }
+            } catch (Exception e) {
+                // Exception ingorée
+            }
+
+            try {
+                rechercheSalleAvecCriteresPreparedStatement.close();
+            } catch (Exception e) {
+                // Exception ingorée
+            }
+        }
     }
 
     /**
