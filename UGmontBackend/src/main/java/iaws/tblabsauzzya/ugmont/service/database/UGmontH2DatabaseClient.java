@@ -85,10 +85,19 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
 
         // Peuplement des tables précédemment crées
         PreparedStatement peuplementDatabasePreparedStatement = dbConn.prepareStatement("" +
-                "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(200, true, true);" +
-                "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(50, false, false);" +
-                "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(100, false, true);" +
-                "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(50, true, false);" +
+                "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(200, true, true); " +
+                "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(50, false, false); " +
+                "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(100, false, true); " +
+                "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(50, true, false); " +
+
+                // Fast and Furious 7
+                "INSERT INTO ASSOCIATIONS (idSalle, idImdbFilm, dateDebut, dateFin) VALUES(1, 'tt2820852', {ts '2015-04-01 00:00:00.000'}, {ts '2015-04-05 23:59:59.999'}); " +
+
+                // Die Hard
+                "INSERT INTO ASSOCIATIONS (idSalle, idImdbFilm, dateDebut, dateFin) VALUES(2, 'tt0095016', {ts '2015-04-03 00:00:00.000'}, {ts '2015-04-10 23:59:59.999'}); " +
+
+                // Hitman le cobra
+                "INSERT INTO ASSOCIATIONS (idSalle, idImdbFilm, dateDebut, dateFin) VALUES(3, 'tt1040019', {ts '2015-04-05 00:00:00.000'}, {ts '2015-04-10 23:59:59.999'}); " +
                 "");
         peuplementDatabasePreparedStatement.executeUpdate();
 
@@ -166,7 +175,7 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
     public Set<AssociationFilmSalle> getAssociationFilmSalle() throws SQLException {
 
         PreparedStatement listeDesAssociationFilmSallesPreparedStatement = dbConn.prepareStatement("" +
-                "SELECT * FROM SALLES");
+                "SELECT * FROM ASSOCIATIONS");
 
         if (!listeDesAssociationFilmSallesPreparedStatement.execute()) {
             throw new RuntimeException("Impossible d'exécuter la requête de récupération de la liste des associations film salle");
@@ -212,6 +221,13 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
     //   PRIVATE HELPERS
     //
 
+
+    /**
+     *
+     * @param resultSet
+     * @return
+     * @throws SQLException
+     */
     private Salle creerSalleAPartirResultSet(ResultSet resultSet) throws SQLException {
 
         final int idSalle = resultSet.getInt("idSalle");
@@ -221,6 +237,12 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
         return new Salle(idSalle, capacite, isIMAX, is3D);
     }
 
+    /**
+     *
+     * @param resultSet
+     * @return
+     * @throws SQLException
+     */
     private AssociationFilmSalle creerAssociationFilmSalleAPartirResultSet(ResultSet resultSet) throws SQLException {
 
         final String filmImdbId = resultSet.getString("idImdbFilm");

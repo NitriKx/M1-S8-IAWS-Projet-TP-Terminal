@@ -1,5 +1,6 @@
 package iaws.tblabsauzzya.ugmont.service;
 
+import iaws.tblabsauzzya.ugmont.model.AssociationFilmSalle;
 import iaws.tblabsauzzya.ugmont.model.Salle;
 import iaws.tblabsauzzya.ugmont.model.Theatre;
 import iaws.tblabsauzzya.ugmont.service.database.IUGmontDatabaseClient;
@@ -34,6 +35,11 @@ public class UGmontBackendService {
     public Set<Salle> getListSalles() throws SQLException {
 
         return databaseClient.getSalles();
+    }
+
+    public Set<AssociationFilmSalle> getAssociationFilmSalle() throws SQLException {
+
+        return databaseClient.getAssociationFilmSalle();
     }
 
     public List<Theatre> getListTheatres(int id) {

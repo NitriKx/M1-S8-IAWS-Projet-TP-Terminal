@@ -12,6 +12,7 @@ public class UGmontBackendTestModule {
     @Test
     public void testCreationBaseDeDonnees() throws Exception {
         Assert.assertEquals(4, UGmontBackendService.getInstance().getListSalles().size());
+        Assert.assertEquals(3, UGmontBackendService.getInstance().getAssociationFilmSalle().size());
     }
 
 
