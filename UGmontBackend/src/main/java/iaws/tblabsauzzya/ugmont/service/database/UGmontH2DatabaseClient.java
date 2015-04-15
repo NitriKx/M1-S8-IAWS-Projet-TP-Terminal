@@ -6,20 +6,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.sql.Date;
+import java.util.*;
 
 /**
  * Created by Benoît Sauvère on 25/03/15.
  */
 public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
 
+    //
+    //   ATTRIBUTS
+    //
+
     private static final Logger _log = LoggerFactory.getLogger(UGmontH2DatabaseClient.class);
 
-
-
     private Connection dbConn;
+
+
+
+    //
+    //  CONSTRUCTEUR
+    //
+
 
     public UGmontH2DatabaseClient() {
 
@@ -37,14 +45,24 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
     }
 
 
+
+    //
+    //   PUBLIC
+    //
+
+
+    /**
+     * {@inheritDoc}
+     */
     public void resetDatabase() throws SQLException {
 
         _log.info("Remise à zéro de la base de données ...");
 
+        // Suppression des données précédente
         PreparedStatement dropDatabasePreparedStatement = dbConn.prepareStatement("DROP TABLE IF EXISTS ASSOCIATIONS; DROP TABLE IF EXISTS SALLES;");
-
         dropDatabasePreparedStatement.executeUpdate();
 
+        // Création des tables
         PreparedStatement createDatabasePreparedStatement = dbConn.prepareStatement("" +
                 "CREATE TABLE SALLES (\n" +
                 "idSalle INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
@@ -63,58 +81,61 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
                 "ALTER TABLE ASSOCIATIONS ADD PRIMARY KEY (idSalle, idImdbFilm, dateDebut);" +
 
                 "");
-
         createDatabasePreparedStatement.executeUpdate();
 
+        // Peuplement des tables précédemment crées
         PreparedStatement peuplementDatabasePreparedStatement = dbConn.prepareStatement("" +
                 "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(200, true, true);" +
                 "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(50, false, false);" +
                 "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(100, false, true);" +
                 "INSERT INTO SALLES (capacite, isIMAX, is3D) VALUES(50, true, false);" +
                 "");
-
-
-
         peuplementDatabasePreparedStatement.executeUpdate();
 
-        _log.info("Remise à zéro de la base de données ...");
+        _log.info("Base de données remise à zéro");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<Salle> rechercheSalleAvecCriteres(Salle salleAvecCriteres) {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void posterAssociationSalle(AssociationFilmSalle nouvelleAssociation) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Set<Salle> rechercheSalleAffectee(String filmImdbId) {
         return null;
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     public Set<Salle> getSalles() throws SQLException  {
-        PreparedStatement listeDesSallesPreparedStatement = dbConn.prepareStatement("" +
-                "SELECT * FROM SALLES");
+        PreparedStatement listeDesSallesPreparedStatement = dbConn.prepareStatement("SELECT * FROM SALLES");
 
-        if (listeDesSallesPreparedStatement.execute() == false) {
+        if (!listeDesSallesPreparedStatement.execute()) {
             throw new RuntimeException("Impossible d'exécuter la requête de récupération de la liste des salles");
         }
 
+        // Convertit la liste des resultats en objets salles
         Set<Salle> result = new LinkedHashSet<Salle>();
         ResultSet listeDesSalles = null;
         try {
             listeDesSalles = listeDesSallesPreparedStatement.getResultSet();
 
             while (listeDesSalles.next()) {
-
-                final int idSalle = listeDesSalles.getInt("idSalle");
-                final int capacite = listeDesSalles.getInt("capacite");
-                final boolean isIMAX = listeDesSalles.getBoolean("isIMAX");
-                final boolean is3D = listeDesSalles.getBoolean("is3D");
-                result.add(new Salle(idSalle, capacite, isIMAX, is3D));
+                result.add(creerSalleAPartirResultSet(listeDesSalles));
             }
-
             return result;
 
         } catch (Exception e) {
@@ -123,7 +144,9 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
 
         } finally {
             try {
-                listeDesSalles.close();
+                if (listeDesSalles != null) {
+                    listeDesSalles.close();
+                }
             } catch (Exception e) {
                 // Exception ingorée
             }
@@ -135,6 +158,76 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
             }
         }
 
-
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Set<AssociationFilmSalle> getAssociationFilmSalle() throws SQLException {
+
+        PreparedStatement listeDesAssociationFilmSallesPreparedStatement = dbConn.prepareStatement("" +
+                "SELECT * FROM SALLES");
+
+        if (!listeDesAssociationFilmSallesPreparedStatement.execute()) {
+            throw new RuntimeException("Impossible d'exécuter la requête de récupération de la liste des associations film salle");
+        }
+
+        // Convertit la liste des resultats en objets salles
+        Set<AssociationFilmSalle> result = new LinkedHashSet<AssociationFilmSalle>();
+        ResultSet listeDesAssociationFilmSalle = null;
+        try {
+            listeDesAssociationFilmSalle = listeDesAssociationFilmSallesPreparedStatement.getResultSet();
+
+            while (listeDesAssociationFilmSalle.next()) {
+                result.add(creerAssociationFilmSalleAPartirResultSet(listeDesAssociationFilmSalle));
+            }
+            return result;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Impossible de créer la liste des associations film salle à partir du résultat de la requête", e);
+
+
+        } finally {
+            try {
+                if (listeDesAssociationFilmSalle != null) {
+                    listeDesAssociationFilmSalle.close();
+                }
+            } catch (Exception e) {
+                // Exception ingorée
+            }
+
+            try {
+                listeDesAssociationFilmSallesPreparedStatement.close();
+            } catch (Exception e) {
+                // Exception ingorée
+            }
+        }
+    }
+
+
+
+
+
+    //
+    //   PRIVATE HELPERS
+    //
+
+    private Salle creerSalleAPartirResultSet(ResultSet resultSet) throws SQLException {
+
+        final int idSalle = resultSet.getInt("idSalle");
+        final int capacite = resultSet.getInt("capacite");
+        final boolean isIMAX = resultSet.getBoolean("isIMAX");
+        final boolean is3D = resultSet.getBoolean("is3D");
+        return new Salle(idSalle, capacite, isIMAX, is3D);
+    }
+
+    private AssociationFilmSalle creerAssociationFilmSalleAPartirResultSet(ResultSet resultSet) throws SQLException {
+
+        final String filmImdbId = resultSet.getString("idImdbFilm");
+        final Integer salleId = resultSet.getInt("idSalle");
+        final Date dateDebut = resultSet.getDate("dateDebut");
+        final Date dateFin = resultSet.getDate("dateFin");
+        return new AssociationFilmSalle(filmImdbId, salleId, dateDebut, dateFin);
+    }
+
 }

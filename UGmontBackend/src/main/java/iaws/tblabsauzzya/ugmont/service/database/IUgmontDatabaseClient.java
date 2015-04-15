@@ -31,7 +31,7 @@ public interface IUGmontDatabaseClient {
     public void posterAssociationSalle(AssociationFilmSalle nouvelleAssociation);
 
     /**
-     * Recherche toute les salles associée à un film
+     * Recherche toute les salles associée à un film.
      * @param filmImdbId
      * @return
      */
@@ -42,4 +42,10 @@ public interface IUGmontDatabaseClient {
      * @return toute les salles contenues dans la base de données
      */
     public Set<Salle> getSalles() throws SQLException;
+
+    /**
+     * Retourne toute les associations contenues dans la base de données.
+     * @return toute les associations contenues dans la base de données
+     */
+    public Set<AssociationFilmSalle> getAssociationFilmSalle() throws SQLException;
 }
