@@ -28,7 +28,7 @@ public interface IUGmontDatabaseClient {
      * Créer une nouvelle association entre un salle et un film
      * @param nouvelleAssociation
      */
-    public void posterAssociationSalle(AssociationFilmSalle nouvelleAssociation);
+    public void posterAssociationSalle(AssociationFilmSalle nouvelleAssociation) throws SQLException;
 
     /**
      * Recherche toute les salles associée à un film.

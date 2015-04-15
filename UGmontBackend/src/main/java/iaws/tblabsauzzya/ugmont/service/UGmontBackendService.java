@@ -64,6 +64,16 @@ public class UGmontBackendService {
 
     /**
      *
+     * @return
+     * @throws SQLException
+     */
+    public void posterNouvelleAssociationFilmSalles(AssociationFilmSalle nouvelleAssociation) throws SQLException {
+
+        databaseClient.posterAssociationSalle(nouvelleAssociation);
+    }
+
+    /**
+     *
      * @param salleContenantCriteres Un objet salle contenant les critères à rechercher. Mettre les attributs à null si pas utilisé pour la recherche.
      *                               L'identifiant contenu dans l'objet salle sera ignoré.
      * @return La liste des salles correspondant aux critères
@@ -73,6 +83,7 @@ public class UGmontBackendService {
 
         return databaseClient.rechercheSalleAvecCriteres(salleContenantCriteres);
     }
+
 
     /**
      *
@@ -84,6 +95,16 @@ public class UGmontBackendService {
     }
 
 
+    /**
+     *
+     */
+    public void resetDatabase() {
+        try {
+            databaseClient.resetDatabase();
+        } catch (Exception e) {
+            throw new RuntimeException("Impossible de remettre à zéro la base de données", e);
+        }
+    }
 
 
     //
@@ -93,15 +114,12 @@ public class UGmontBackendService {
     private static UGmontBackendService __instance = new UGmontBackendService();
 
     private UGmontBackendService() {
-        try {
-            this.databaseClient.resetDatabase();
-        } catch (Exception e) {
-            throw new RuntimeException("Impossible de remettre à zéro la base de données", e);
-        }
+        resetDatabase();
     }
 
     public static UGmontBackendService getInstance() {
         return __instance;
     }
+
 
 }

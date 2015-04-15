@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -166,8 +167,20 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
     /**
      * {@inheritDoc}
      */
-    public void posterAssociationSalle(AssociationFilmSalle nouvelleAssociation) {
+    public void posterAssociationSalle(AssociationFilmSalle nouvelleAssociation) throws SQLException {
 
+
+        PreparedStatement nouvelleAssociationSalleFilmPreparedRequest = dbConn.prepareStatement(
+                "INSERT INTO ASSOCIATIONS (idSalle, idImdbFilm, dateDebut, dateFin) VALUES(?, ?, ?, ?);");
+
+        nouvelleAssociationSalleFilmPreparedRequest.setInt(1, nouvelleAssociation.salleId);
+        nouvelleAssociationSalleFilmPreparedRequest.setString(2, nouvelleAssociation.filmImdbId);
+        nouvelleAssociationSalleFilmPreparedRequest.setDate(3, new java.sql.Date(nouvelleAssociation.dateDebut.getTime()));
+        nouvelleAssociationSalleFilmPreparedRequest.setDate(4, new java.sql.Date(nouvelleAssociation.dateFin.getTime()));
+
+        if (nouvelleAssociationSalleFilmPreparedRequest.executeUpdate() <= 0) {
+            throw new RuntimeException(String.format("Impossible de poster la nouvelle association film salle pour le film=[%s] dateDebut=[%s] dateFin=[%s]", nouvelleAssociation.filmImdbId, nouvelleAssociation.dateDebut, nouvelleAssociation.dateFin));
+        }
     }
 
     /**
