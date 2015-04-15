@@ -29,9 +29,9 @@ public class UgmontRessource {
     @GET
     @Path("/recherche")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getFilms(@QueryParam("nom") String nom, @QueryParam("anneeSortie") String anneeSortie) throws XPathExpressionException {
+    public List<Film> getFilms(@QueryParam("nom") String nom, @QueryParam("anneeSortie") String anneeSortie) throws XPathExpressionException {
 
-        List<String> imdbIDs = new LinkedList<>();
+        List<Film> imdbIDs = new LinkedList<>();
 
         Client c = ClientBuilder.newClient();
         DOMSource returnXML = c.target("http://www.omdbapi.com")
@@ -47,7 +47,10 @@ public class UgmontRessource {
         NodeList nodes = (NodeList) xpath.evaluate("//Movie", returnXML.getNode(), XPathConstants.NODESET);
 
         for(int i = 0; i < nodes.getLength(); i++)
-            imdbIDs.add(nodes.item(i).getAttributes().getNamedItem("imdbID").getNodeValue());
+            imdbIDs.add(new Film(nodes.item(i).getAttributes().getNamedItem("Title").getNodeValue(),
+                    nodes.item(i).getAttributes().getNamedItem("Type").getNodeValue(),
+                    nodes.item(i).getAttributes().getNamedItem("Year").getNodeValue(),
+                    nodes.item(i).getAttributes().getNamedItem("imdbID").getNodeValue()));
 
         return imdbIDs;
 
