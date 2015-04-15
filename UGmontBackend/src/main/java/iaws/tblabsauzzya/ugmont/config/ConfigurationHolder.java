@@ -1,14 +1,16 @@
 package iaws.tblabsauzzya.ugmont.config;
 
-import com.google.inject.Inject;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Benoît Sauvère on 25/03/15.
  */
 public class ConfigurationHolder {
 
+    private static final Logger _log = LoggerFactory.getLogger(ConfigurationHolder.class);
 
     //
     //  ATTRIBUTES
@@ -34,14 +36,15 @@ public class ConfigurationHolder {
     //   SINGLETON
     //
 
-    @Inject private static ConfigurationHolder __instance;
+    private static ConfigurationHolder __instance = new ConfigurationHolder();
 
-    @Inject
-    private ConfigurationHolder(IConfigurationProvider configurationProvider) {
+    private ConfigurationHolder() {
 
-        // Charge la configuration depuis le fichier
+        _log.info("Chargement de la configuration...");
+
+        // Charge la configuration depuis le fichier configuration.xml
         try {
-            config = configurationProvider.getConfiguration();
+            config = new ConfigurationProviderImpl().getConfiguration();
 
         } catch (ConfigurationException e) {
             throw new RuntimeException("Impossible de charger le fichier de configuration", e);
