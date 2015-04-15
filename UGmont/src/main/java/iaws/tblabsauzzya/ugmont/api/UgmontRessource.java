@@ -1,6 +1,5 @@
 package iaws.tblabsauzzya.ugmont.api;
 
-import com.sun.media.jfxmedia.Media;
 import iaws.tblabsauzzya.ugmont.model.Film;
 import org.w3c.dom.NodeList;
 
@@ -10,15 +9,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by terry on 25/03/15.
