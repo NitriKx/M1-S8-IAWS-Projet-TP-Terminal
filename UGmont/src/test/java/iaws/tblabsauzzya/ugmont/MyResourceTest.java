@@ -3,6 +3,7 @@ package iaws.tblabsauzzya.ugmont;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 
@@ -49,9 +50,13 @@ public class MyResourceTest {
         assertEquals("Got it!", responseMsg);
     }
 
-    /*@Test
+    @Test
     public void testFilm() {
-        List<String> responseMsg = target.path("myapp/film/recherche?nom=star+wars&anneeSortie=2000").request().get(List.class);
+
+        List<String> responseMsg = target.path("film/recherche")
+                .queryParam("nom", "star wars")
+                .queryParam("anneeSortie", "2000")
+                .request(MediaType.APPLICATION_JSON).get(List.class);
         assertEquals(responseMsg.get(2), "tt0824442");
-    }*/
+    }
 }
