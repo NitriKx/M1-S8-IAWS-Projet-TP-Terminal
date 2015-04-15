@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import iaws.tblabsauzzya.ugmont.config.ConfigurationHolder;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +87,8 @@ public class GrizzlyServerEntryPoint {
         final ResourceConfig rc = new ResourceConfig()
                 // Indique à Grizzly le package qu'il doit scanner pour trouver les classes
                 .packages("iaws.tblabsauzzya");
+
+        rc.register(JacksonFeature.class);        //rc.put(JSONConfiguration.FEATURE_POJO_MAPPING, true);
 
         HttpServer httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
 

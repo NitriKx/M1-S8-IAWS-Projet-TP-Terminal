@@ -49,9 +49,9 @@ public class MyResourceTest {
         assertEquals("Got it!", responseMsg);
     }
 
-    @Test
+    /*@Test
     public void testFilm() {
-        List responseMsg = target.path("film/recherche").request().get(List.class);
-        assertEquals(responseMsg.get(0), "identifiant");
-    }
+        List<String> responseMsg = target.path("myapp/film/recherche?nom=star+wars&anneeSortie=2000").request().get(List.class);
+        assertEquals(responseMsg.get(2), "tt0824442");
+    }*/
 }

@@ -28,14 +28,15 @@ public class UgmontRessource {
 
     @GET
     @Path("/recherche")
-    public GenericEntity<List<String>> getFilms(@QueryParam("nom") String nom, @QueryParam("anneeSortie") String anneeSortie) throws XPathExpressionException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getFilms(@QueryParam("nom") String nom, @QueryParam("anneeSortie") String anneeSortie) throws XPathExpressionException {
 
         List<String> imdbIDs = new LinkedList<>();
 
         Client c = ClientBuilder.newClient();
         DOMSource returnXML = c.target("http://www.omdbapi.com")
-                .queryParam("s", "star wars")
-                .queryParam("y", "")
+                .queryParam("s", nom)
+                .queryParam("y", anneeSortie)
                 .queryParam("plot", "short")
                 .queryParam("r", "xml")
                 .request(MediaType.TEXT_XML)
@@ -48,7 +49,7 @@ public class UgmontRessource {
         for(int i = 0; i < nodes.getLength(); i++)
             imdbIDs.add(nodes.item(i).getAttributes().getNamedItem("imdbID").getNodeValue());
 
-        return new <List<String>>(imdbIDs) {};
+        return imdbIDs;
 
     }
 }
