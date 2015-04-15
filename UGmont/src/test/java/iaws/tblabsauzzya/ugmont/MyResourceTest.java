@@ -9,6 +9,9 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class MyResourceTest {
@@ -48,7 +51,7 @@ public class MyResourceTest {
 
     @Test
     public void testFilm() {
-        String responseMsg = target.path("film/recherche").request().get(String.class);
-        assertEquals("true", responseMsg);
+        List responseMsg = target.path("film/recherche").request().get(List.class);
+        assertEquals(responseMsg.get(0), "identifiant");
     }
 }
