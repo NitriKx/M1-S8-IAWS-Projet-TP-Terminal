@@ -15,6 +15,9 @@ public class UGmontBackendTestModule {
         Assert.assertEquals(3, UGmontBackendService.getInstance().getAssociationFilmSalle().size());
     }
 
-
+    @Test
+    public void testCreationBaseDeDonneesRechercheAssociation() throws Exception {
+        Assert.assertEquals(1, UGmontBackendService.getInstance().rechercheSalleAssocieeFilm("tt1040019").size());
+    }
 
 }

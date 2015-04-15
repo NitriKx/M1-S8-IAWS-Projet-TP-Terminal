@@ -32,19 +32,46 @@ public class UGmontBackendService {
     //    PUBLIC
     //
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public Set<Salle> getListSalles() throws SQLException {
 
         return databaseClient.getSalles();
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public Set<AssociationFilmSalle> getAssociationFilmSalle() throws SQLException {
 
         return databaseClient.getAssociationFilmSalle();
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
+    public Set<Salle> rechercheSalleAssocieeFilm(String filmImdbId) throws SQLException {
+
+        return databaseClient.rechercheSalleAffectee(filmImdbId);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     public List<Theatre> getListTheatres(int id) {
         return new ArrayList<Theatre>();
     }
+
+
 
 
     //

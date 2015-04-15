@@ -35,7 +35,7 @@ public interface IUGmontDatabaseClient {
      * @param filmImdbId
      * @return
      */
-    public Set<Salle> rechercheSalleAffectee(String filmImdbId);
+    public Set<Salle> rechercheSalleAffectee(String filmImdbId) throws SQLException;
 
     /**
      * Retourne toute les salles contenues dans la base de données.

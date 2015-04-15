@@ -79,7 +79,6 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
                 ");\n" +
 
                 "ALTER TABLE ASSOCIATIONS ADD PRIMARY KEY (idSalle, idImdbFilm, dateDebut);" +
-
                 "");
         createDatabasePreparedStatement.executeUpdate();
 
@@ -121,8 +120,46 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
     /**
      * {@inheritDoc}
      */
-    public Set<Salle> rechercheSalleAffectee(String filmImdbId) {
-        return null;
+    public Set<Salle> rechercheSalleAffectee(String filmImdbId) throws SQLException {
+
+        PreparedStatement rechercheSalleAffecteePreparedStatement = dbConn.prepareStatement("SELECT s.idSalle, s.capacite, s.isIMAX, s.is3D FROM ASSOCIATIONS a, SALLES s WHERE a.idImdbFilm = ? AND s.idSalle = a.idSalle");
+
+        rechercheSalleAffecteePreparedStatement.setString(1, filmImdbId);
+
+        if (!rechercheSalleAffecteePreparedStatement.execute()) {
+            throw new RuntimeException("Impossible d'exécuter la requête de recherche des salles affectée");
+        }
+
+        // Convertit la liste des resultats en objets salles
+        Set<Salle> result = new LinkedHashSet<Salle>();
+        ResultSet listeDesResultatRecherche = null;
+        try {
+            listeDesResultatRecherche = rechercheSalleAffecteePreparedStatement.getResultSet();
+
+            while (listeDesResultatRecherche.next()) {
+                result.add(creerSalleAPartirResultSet(listeDesResultatRecherche));
+            }
+            return result;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Impossible de créer la liste des salles à partir du résultat de la requête de recherche", e);
+
+
+        } finally {
+            try {
+                if (listeDesResultatRecherche != null) {
+                    listeDesResultatRecherche.close();
+                }
+            } catch (Exception e) {
+                // Exception ingorée
+            }
+
+            try {
+                rechercheSalleAffecteePreparedStatement.close();
+            } catch (Exception e) {
+                // Exception ingorée
+            }
+        }
     }
 
 
@@ -174,8 +211,7 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
      */
     public Set<AssociationFilmSalle> getAssociationFilmSalle() throws SQLException {
 
-        PreparedStatement listeDesAssociationFilmSallesPreparedStatement = dbConn.prepareStatement("" +
-                "SELECT * FROM ASSOCIATIONS");
+        PreparedStatement listeDesAssociationFilmSallesPreparedStatement = dbConn.prepareStatement("SELECT * FROM ASSOCIATIONS");
 
         if (!listeDesAssociationFilmSallesPreparedStatement.execute()) {
             throw new RuntimeException("Impossible d'exécuter la requête de récupération de la liste des associations film salle");
