@@ -13,6 +13,13 @@ public class Film {
     private String year;
     private String imdbID;
 
+    public Film(String title, String type, String year, String imdbID) {
+        this.title = title;
+        this.type = type;
+        this.year = year;
+        this.imdbID = imdbID;
+    }
+
     public String getTitle() {
         return title;
     }
