@@ -11,36 +11,36 @@
         </xsd:schema>
     </wsdl:types>
 
-    <wsdl:message name="theatreListRequest">
+    <wsdl:message name="SalleListRequest">
         <wsdl:part element="schema:Movie" name="MovieParam"/>
     </wsdl:message>
 
-    <wsdl:message name="theatreListResponse">
-        <wsdl:part element="schema:TheatreList" name="TheatreListResult"/>
+    <wsdl:message name="SalleListResponse">
+        <wsdl:part element="schema:SallesList" name="SalleListResult"/>
     </wsdl:message>
 
 
-    <wsdl:portType name="TheatreSearch">
+    <wsdl:portType name="SalleListSearch">
 
-        <wsdl:operation name="GetListTheatre">
-            <wsdl:input message="tns:theatreListRequest"/>
-            <wsdl:output message="tns:theatreListResponse"/>
+        <wsdl:operation name="GetListSalles">
+            <wsdl:input message="tns:SalleListRequest"/>
+            <wsdl:output message="tns:SalleListResponse"/>
         </wsdl:operation>
 
     </wsdl:portType>
 
-    <wsdl:binding name="TheatreSearchPortBinding" type="tns:TheatreSearch">
+    <wsdl:binding name="SalleListSearchPortBinding" type="tns:SalleListSearch">
 
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
-        <wsdl:operation name="GetListTheatre">
+        <wsdl:operation name="GetListSalles">
 
             <soap:operation soapAction=""/>
-            <wsdl:input name="MovieTheatreListRequest">
+            <wsdl:input name="SalleListRequest">
                 <soap:body use="literal"/>
             </wsdl:input>
 
-            <wsdl:output name="MovieTheatreListResponse">
+            <wsdl:output name="SalleListResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
 
@@ -49,7 +49,7 @@
     </wsdl:binding>
     
     <wsdl:service name="SearchService">
-        <wsdl:port name="SearchPort" binding="TheatreSearchPortBinding">
+        <wsdl:port name="SearchPort" binding="SalleListSearchPortBinding">
             <soap:address location="localhost:8080/mywebapp/SearchService"/>
         </wsdl:port>
     </wsdl:service>

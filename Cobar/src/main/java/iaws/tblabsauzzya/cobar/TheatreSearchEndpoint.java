@@ -1,6 +1,6 @@
 package iaws.tblabsauzzya.cobar;
 
-import iaws.tblabsauzzya.ugmont.model.Theatre;
+import iaws.tblabsauzzya.ugmont.model.Salle;
 import iaws.tblabsauzzya.ugmont.service.UGmontBackendService;
 import org.jdom.Element;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -8,7 +8,9 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import java.util.List;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by Abel on 09/04/15.
@@ -31,49 +33,54 @@ public class TheatreSearchEndpoint {
 
     /**
      * @param movie
-     * @return theatreList
+     * @return sallesList
+     * @throws SQLException
      */
     @PayloadRoot(localPart = "Movie", namespace = NAMESPACE)
     @ResponsePayload
-    public Element theatreListRequest(@RequestPayload Element movie) {
+    public Element getSalleListHandler(@RequestPayload Element movie) throws SQLException {
 
-        Element theatreList = new Element("TheatreList", NAMESPACE);
+        Element sallesList = new Element("SallesList", NAMESPACE);
 
-        int id = Integer.parseInt(movie.getChild("Id").getText());
-        List<Theatre> response = service.getListTheatres(id);
+        String filmId = movie.getChild("filmImdbId").getText();
+        Set<Salle> salles = service.rechercheSalleAssocieeFilm(filmId);
 
-        for(int i = 0; i<response.size(); i++) {
-            Element theatre = buildElement(response.get(i),NAMESPACE);
-            theatreList.addContent(theatre);
+        for (Iterator<Salle> it = salles.iterator(); it.hasNext();) {
+            Element newSalle = buildElement(it.next(), filmId, NAMESPACE);
+            sallesList.addContent(newSalle);
         }
 
-        return theatreList;
+        return sallesList;
     }
 
     /**
-     * @param t
+     * @param salle
      * @param uri
+     * @param movieID
      * @return
      */
-    private Element buildElement(Theatre t, String uri) {
+    private Element buildElement(Salle salle,String movieID ,String uri) {
 
         //Creation elements
-        Element theatre = new Element("Theatre", uri);
-        Element name = new Element("Name");
-        Element adresse = new Element("Adresse");
-        Element city = new Element("City");
+        Element newSalle = new Element("Salle", uri);
+        Element idSalle = new Element("idSalle");
+        Element capacite = new Element("capacite");
+        Element isMax = new Element("isMax");
+        Element is3D = new Element("is3D");
 
         //setting content
-        name.setText(t.getName());
-        adresse.setText(t.getAdresse());
-        city.setText(t.getCity());
+        idSalle.setText(salle.idSalle.toString());
+        capacite.setText(salle.capacite.toString());
+        isMax.setText(salle.isIMAX.toString());
+        is3D.setText(salle.is3D.toString());
 
         //building hierarchy
-        theatre.addContent(name);
-        theatre.addContent(adresse);
-        theatre.addContent(city);
+        newSalle.addContent(idSalle);
+        newSalle.addContent(capacite);
+        newSalle.addContent(isMax);
+        newSalle.addContent(is3D);
 
-        return theatre;
+        return newSalle;
 
     }
 }

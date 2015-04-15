@@ -2,15 +2,12 @@ package iaws.tblabsauzzya.ugmont.service;
 
 import iaws.tblabsauzzya.ugmont.model.AssociationFilmSalle;
 import iaws.tblabsauzzya.ugmont.model.Salle;
-import iaws.tblabsauzzya.ugmont.model.Theatre;
 import iaws.tblabsauzzya.ugmont.service.database.IUGmontDatabaseClient;
 import iaws.tblabsauzzya.ugmont.service.database.UGmontH2DatabaseClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 
@@ -82,16 +79,6 @@ public class UGmontBackendService {
     public Set<Salle> rechercheSalleAvecCritere(Salle salleContenantCriteres) throws SQLException {
 
         return databaseClient.rechercheSalleAvecCriteres(salleContenantCriteres);
-    }
-
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public List<Theatre> getListTheatres(int id) {
-        return new ArrayList<Theatre>();
     }
 
 
