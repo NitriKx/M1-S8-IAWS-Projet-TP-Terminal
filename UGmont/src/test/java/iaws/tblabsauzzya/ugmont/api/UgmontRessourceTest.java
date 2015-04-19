@@ -1,23 +1,25 @@
-package iaws.tblabsauzzya.ugmont;
+package iaws.tblabsauzzya.ugmont.api;
+
+import iaws.tblabsauzzya.ugmont.GrizzlyServerEntryPoint;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-
-import org.glassfish.grizzly.http.server.HttpServer;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class MyResourceTest {
+/**
+ * Created by terry on 19/04/15.
+ */
+public class UgmontRessourceTest {
 
     private HttpServer server;
     private WebTarget target;
@@ -43,13 +45,16 @@ public class MyResourceTest {
         server.stop();
     }
 
-    /**
-     * Test to see that the message "Got it!" is sent in the response.
-     */
     @Test
-    public void testGetIt() {
-        String responseMsg = target.path("myresource").request().get(String.class);
-        assertEquals("Got it!", responseMsg);
+    public void testGetFilms() {
+
+        List<HashMap> responseMsg = target.path("film/recherche")
+                .queryParam("nom", "star wars")
+                .queryParam("anneeSortie", "2000")
+                .request(MediaType.APPLICATION_JSON).get(List.class);
+
+        assertEquals("tt0824442",
+                responseMsg.get(2).get("imdbID"));
     }
 
 }
