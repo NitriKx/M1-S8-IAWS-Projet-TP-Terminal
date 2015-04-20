@@ -2,6 +2,7 @@ package iaws.tblabsauzzya.ugmont.service.database;
 
 import iaws.tblabsauzzya.ugmont.model.AssociationFilmSalle;
 import iaws.tblabsauzzya.ugmont.model.Salle;
+import iaws.tblabsauzzya.ugmont.model.exceptions.SalleInconnueException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -42,6 +43,15 @@ public interface IUGmontDatabaseClient {
      * @return toute les salles contenues dans la base de données
      */
     public Set<Salle> getSalles() throws SQLException;
+
+    /**
+     * Retourne la salle associée à cet identifiant.
+     * @param idSalle l'identifiant de salle
+     * @return la salle associée à cet identifiant
+     * @throws SQLException
+     * @throws SalleInconnueException si aucune salle ne possède cet identifiant
+     */
+    public Salle getSalle(Integer idSalle) throws SalleInconnueException, SQLException;
     
     /**
      * Retourne toute les associations contenues dans la base de données.

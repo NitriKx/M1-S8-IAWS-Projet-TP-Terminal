@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Benoît Sauvère on 25/03/15.
@@ -20,8 +21,16 @@ public class UGmontBackendTestModule {
 
     @Test
     public void testCreationBaseDeDonnees() throws Exception {
-        Assert.assertEquals(4, UGmontBackendService.getInstance().getListSalles().size());
+        final Set<Salle> listeDesSallesALaCreation = UGmontBackendService.getInstance().getListSalles();
+        Assert.assertEquals(4, listeDesSallesALaCreation.size());
         Assert.assertEquals(3, UGmontBackendService.getInstance().getAssociationFilmSalle().size());
+
+        // Vérifie que le getSalle fonctionne bien
+        for (Salle s : listeDesSallesALaCreation) {
+            final Salle r = UGmontBackendService.getInstance().getSalle(s.idSalle);
+            Assert.assertEquals(s, r);
+        }
+
     }
 
     @Test
@@ -47,5 +56,7 @@ public class UGmontBackendTestModule {
 
         Assert.assertEquals(1, UGmontBackendService.getInstance().rechercheSalleAssocieeFilm("tt0357111").size());
     }
+
+
 
 }

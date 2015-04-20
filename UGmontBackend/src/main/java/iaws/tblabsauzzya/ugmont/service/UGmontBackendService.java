@@ -2,6 +2,7 @@ package iaws.tblabsauzzya.ugmont.service;
 
 import iaws.tblabsauzzya.ugmont.model.AssociationFilmSalle;
 import iaws.tblabsauzzya.ugmont.model.Salle;
+import iaws.tblabsauzzya.ugmont.model.exceptions.SalleInconnueException;
 import iaws.tblabsauzzya.ugmont.service.database.IUGmontDatabaseClient;
 import iaws.tblabsauzzya.ugmont.service.database.UGmontH2DatabaseClient;
 import org.slf4j.Logger;
@@ -41,6 +42,18 @@ public class UGmontBackendService {
 
     /**
      *
+     * @param idSalle
+     * @return
+     * @throws SalleInconnueException
+     * @throws SQLException
+     */
+    public Salle getSalle(Integer idSalle) throws SalleInconnueException, SQLException {
+
+        return databaseClient.getSalle(idSalle);
+    }
+
+    /**
+     *
      * @return
      * @throws SQLException
      */
@@ -63,8 +76,12 @@ public class UGmontBackendService {
      *
      * @return
      * @throws SQLException
+     * @throws SalleInconnueException
      */
-    public void posterNouvelleAssociationFilmSalles(AssociationFilmSalle nouvelleAssociation) throws SQLException {
+    public void posterNouvelleAssociationFilmSalles(AssociationFilmSalle nouvelleAssociation) throws SalleInconnueException, SQLException {
+
+        // Vérifie que la salle existe (une exception sera levée si elle existe pas)
+        databaseClient.getSalle(nouvelleAssociation.salleId);
 
         databaseClient.posterAssociationSalle(nouvelleAssociation);
     }
