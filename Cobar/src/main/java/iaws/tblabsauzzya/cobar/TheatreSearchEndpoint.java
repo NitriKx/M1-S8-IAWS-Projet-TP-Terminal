@@ -45,8 +45,7 @@ public class TheatreSearchEndpoint {
      */
     @PayloadRoot(namespace = NAMESPACE, localPart = "MovieRequest")
     @ResponsePayload
-    public final Element getSalleListHandler(@RequestPayload
-                                                 final Element movie)
+    public final Element getSalleListHandler(@RequestPayload final Element movie)
             throws SQLException {
 
         Element sallesList = new Element("SallesListResponse", NAMESPACE);
