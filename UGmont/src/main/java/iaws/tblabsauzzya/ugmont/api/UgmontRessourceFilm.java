@@ -1,5 +1,6 @@
 package iaws.tblabsauzzya.ugmont.api;
 
+import iaws.tblabsauzzya.ugmont.api.responses.RechercheFilmResponse;
 import iaws.tblabsauzzya.ugmont.model.Film;
 import org.w3c.dom.NodeList;
 
@@ -22,12 +23,14 @@ import java.util.List;
  * Created by terry on 25/03/15.
  */
 @Path("/film")
-public class UgmontRessource {
+public class UgmontRessourceFilm {
 
     @GET
     @Path("/recherche")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Film> getFilms(@QueryParam("nom") String nom, @QueryParam("anneeSortie") String anneeSortie) throws XPathExpressionException {
+    // E1 : de récupérer une liste de films (identifiés par leur ID IMDb) à partir de
+    // leur titre et/ou de leur année de sortie
+    public RechercheFilmResponse getFilms(@QueryParam("nom") String nom, @QueryParam("anneeSortie") String anneeSortie) throws XPathExpressionException {
 
         List<Film> imdbIDs = new LinkedList<>();
 
@@ -45,12 +48,13 @@ public class UgmontRessource {
         NodeList nodes = (NodeList) xpath.evaluate("//Movie", returnXML.getNode(), XPathConstants.NODESET);
 
         for(int i = 0; i < nodes.getLength(); i++)
-            imdbIDs.add(new Film(nodes.item(i).getAttributes().getNamedItem("Title").getNodeValue(),
+            imdbIDs.add(new Film(
+                    nodes.item(i).getAttributes().getNamedItem("Title").getNodeValue(),
                     nodes.item(i).getAttributes().getNamedItem("Type").getNodeValue(),
                     nodes.item(i).getAttributes().getNamedItem("Year").getNodeValue(),
                     nodes.item(i).getAttributes().getNamedItem("imdbID").getNodeValue()));
 
-        return imdbIDs;
+        return new RechercheFilmResponse(imdbIDs);
 
     }
 }

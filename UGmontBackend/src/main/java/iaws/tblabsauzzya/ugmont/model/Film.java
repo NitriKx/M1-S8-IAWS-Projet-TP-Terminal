@@ -13,6 +13,8 @@ public class Film {
     private String year;
     private String imdbID;
 
+    public Film() {}
+
     public Film(String title, String type, String year, String imdbID) {
         this.title = title;
         this.type = type;
