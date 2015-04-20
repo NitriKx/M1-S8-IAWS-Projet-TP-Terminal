@@ -14,6 +14,8 @@ public class Salle {
 
     public Boolean is3D;
 
+    public Salle() {}
+
     public Salle(Integer idSalle, Integer capacite, Boolean isIMAX, Boolean is3D) {
         this.idSalle = idSalle;
         this.capacite = capacite;

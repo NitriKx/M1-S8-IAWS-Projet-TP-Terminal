@@ -2,6 +2,7 @@ package iaws.tblabsauzzya.ugmont.service.database;
 
 import iaws.tblabsauzzya.ugmont.model.AssociationFilmSalle;
 import iaws.tblabsauzzya.ugmont.model.Salle;
+import iaws.tblabsauzzya.ugmont.model.exceptions.SalleInconnueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -270,6 +271,25 @@ public class UGmontH2DatabaseClient implements IUGmontDatabaseClient {
             }
         }
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Salle getSalle(Integer idSalle) throws SalleInconnueException, SQLException {
+
+        PreparedStatement getSallePreparedRequest = dbConn.prepareStatement(
+                "SELECT * FROM SALLES WHERE idSalle = ? ;");
+
+        getSallePreparedRequest.setInt(1, idSalle);
+
+        final ResultSet resultSet = getSallePreparedRequest.executeQuery();
+
+        if (resultSet.next()) {
+            return creerSalleAPartirResultSet(resultSet);
+        } else {
+            throw new SalleInconnueException(idSalle);
+        }
     }
 
     /**

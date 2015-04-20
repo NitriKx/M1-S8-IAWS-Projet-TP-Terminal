@@ -1,8 +1,12 @@
 package iaws.tblabsauzzya.ugmont.api;
 
 import iaws.tblabsauzzya.ugmont.GrizzlyServerEntryPoint;
+import iaws.tblabsauzzya.ugmont.api.responses.RechercheFilmResponse;
+import iaws.tblabsauzzya.ugmont.api.responses.RechercheSalleResponse;
+import iaws.tblabsauzzya.ugmont.model.Salle;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,16 +14,12 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
+import java.util.HashSet;
 
 /**
- * Created by terry on 19/04/15.
+ * Created by terry on 20/04/15.
  */
-public class UgmontRessourceTest {
+public class UGmontRessourceSalleTest {
 
     private HttpServer server;
     private WebTarget target;
@@ -46,15 +46,16 @@ public class UgmontRessourceTest {
     }
 
     @Test
-    public void testGetFilms() {
+    public void testRechercherListeSallesSelonCriteres() {
 
-        List<HashMap> responseMsg = target.path("film/recherche")
-                .queryParam("nom", "star wars")
-                .queryParam("anneeSortie", "2000")
-                .request(MediaType.APPLICATION_JSON).get(List.class);
+        RechercheSalleResponse responseMsg = target.path("salle/recherche")
+                .queryParam("capacite", "100")
+                .queryParam("isIMAX", "true")
+                .queryParam("is3D", "true")
+                .request(MediaType.APPLICATION_JSON).get(RechercheSalleResponse.class);
 
-        assertEquals("tt0824442",
-                responseMsg.get(2).get("imdbID"));
+        Assert.assertEquals(new Integer(1), responseMsg.listeSalles.iterator().next().idSalle);
+
     }
 
 }
