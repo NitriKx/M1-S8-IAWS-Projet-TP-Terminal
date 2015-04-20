@@ -7,16 +7,20 @@
        http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <sws:annotation-driven/>
+    <!-- to use with dynamic-wsdl
+    <context:component-scan base-package="iaws.tblabsauzzya"/>
+    -->
+
     <sws:static-wsdl
             id="service"
             location="/WEB-INF/wsdl/serviceContract.wsdl"/>
 
-    <!--<sws:dynamic-wsdl id="Movie"
-    portTypeName="UGmontBackend"
-    locationUri="/MovieService/"
-    targetNamespace="http://projectCobart/namespace">
-    <sws:xsd location="/WEB-INF/scheme/dataContract.xsd"/>
-</sws:dynamic-wsdl>-->
+    <!--<sws:dynamic-wsdl id="serviceContract"
+        portTypeName="searchService"
+        locationUri="/searchService"
+        targetNamespace="http://projectCobart/namespace/scheme">
+        <sws:xsd location="/WEB-INF/scheme/dataContract.xsd"/>
+    </sws:dynamic-wsdl>-->
 
     <bean id="TheatreSearchEndpoint" class="iaws.tblabsauzzya.cobar.TheatreSearchEndpoint"/>
     <bean id="UGmontBackend" class="iaws.tblabsauzzya.ugmont.service.UGmontBackendService"/>
