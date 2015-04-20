@@ -17,7 +17,7 @@ import static org.springframework.ws.test.server.ResponseMatchers.payload;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("../../../../webapp/WEB-INF/spring-ws-servlet.xml")
+@ContextConfiguration(locations={"classpath*:spring-config.xml"})
 public class TheatreSearchEndpointIntegrationTest {
 
     @Autowired
@@ -33,13 +33,13 @@ public class TheatreSearchEndpointIntegrationTest {
     @Test
     public void getSalleListHandlerTest() throws Exception {
         Source requestPayload = new StringSource(
-                "<Movie xmlns='http://projectCobart/namespace'>" +
-                        "<filmImdbId>//idb a ajouter//</filmImdbId>" +
-                        "</Movie>");
+                "<MovieRequest xmlns='http://projectCobart/namespace/scheme'>" +
+                        "<filmImdbId>tt0357111</filmImdbId>" +
+                        "</MovieRequest>");
         Source responsePayload = new StringSource(
-                "<SallesList xmlns='http://projectCobart/namespace'>" +
+                "<SallesListResponse xmlns='http://projectCobart/namespace/scheme'>" +
                         "<Salle>//ajouter attribut//</Salle>" +
-                        "</SallesList>");
+                        "</SallesListResponse>");
 
         mockClient.sendRequest(withPayload(requestPayload)).
                 andExpect(payload(responsePayload));

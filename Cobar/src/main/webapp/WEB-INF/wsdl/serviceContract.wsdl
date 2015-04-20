@@ -2,34 +2,34 @@
 
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:schema="http://projectCobart/namespace"
-                  xmlns:tns="Mynamespace"
-                  targetNamespace="Mynamespace">
+                  xmlns:schema="http://projectCobart/namespace/scheme"
+                  xmlns:tns="http://projectCobart/namespace/definitions"
+                  targetNamespace="http://projectCobart/namespace/definitions">
     <wsdl:types>
         <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <xsd:import namespace="http://projectCobart/namespace" schemaLocation="../scheme/dataContract.xsd"/>
+            <xsd:import namespace="http://projectCobart/namespace/scheme" schemaLocation="../scheme/dataContract.xsd"/>
         </xsd:schema>
     </wsdl:types>
 
-    <wsdl:message name="SalleListRequest">
-        <wsdl:part element="schema:Movie" name="MovieParam"/>
+    <wsdl:message name="MovieRequest">
+        <wsdl:part element="schema:MovieRequest" name="MovieParam"/>
     </wsdl:message>
 
-    <wsdl:message name="SalleListResponse">
-        <wsdl:part element="schema:SallesList" name="SalleListResult"/>
+    <wsdl:message name="SallesListResponse">
+        <wsdl:part element="schema:SallesListResponse" name="SalleListResult"/>
     </wsdl:message>
 
 
-    <wsdl:portType name="SalleListSearch">
+    <wsdl:portType name="Cobar">
 
         <wsdl:operation name="GetListSalles">
-            <wsdl:input message="tns:SalleListRequest"/>
-            <wsdl:output message="tns:SalleListResponse"/>
+            <wsdl:input message="tns:MovieRequest"/>
+            <wsdl:output message="tns:SallesListResponse"/>
         </wsdl:operation>
 
     </wsdl:portType>
 
-    <wsdl:binding name="SalleListSearchPortBinding" type="tns:SalleListSearch">
+    <wsdl:binding name="CobarBinding" type="tns:Cobar">
 
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
@@ -48,12 +48,10 @@
 
     </wsdl:binding>
     
-    <wsdl:service name="SearchService">
-        <wsdl:port name="SearchPort" binding="SalleListSearchPortBinding">
-            <soap:address location="localhost:8080/mywebapp/SearchService"/>
+    <wsdl:service name="CobarService">
+        <wsdl:port name="CobarPort" binding="CobarBinding">
+            <soap:address location="localhost:8080/Cobar"/>
         </wsdl:port>
     </wsdl:service>
-
-
 
 </wsdl:definitions>

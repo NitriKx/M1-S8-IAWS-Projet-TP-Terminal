@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:prj="http://projectCobart/namespace"
+        xmlns:prj="http://projectCobart/namespace/scheme"
         elementFormDefault="qualified"
-        targetNamespace="http://projectCobart/namespace">
+        targetNamespace="http://projectCobart/namespace/scheme">
 
-	<xsd:element name="Movie">
+	<xsd:element name="MovieRequest">
 		<xsd:complexType>
 			<xsd:all>
 				<xsd:element name="filmImdbId" type="xsd:string" />
@@ -13,7 +13,7 @@
 		</xsd:complexType>
 	</xsd:element>
 
-	<xsd:element name="SallesList">
+	<xsd:element name="SallesListResponse">
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="Salle" type="prj:SalleType" minOccurs="0" maxOccurs="unbounded" />

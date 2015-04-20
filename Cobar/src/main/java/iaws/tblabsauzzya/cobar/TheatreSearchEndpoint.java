@@ -3,6 +3,7 @@ package iaws.tblabsauzzya.cobar;
 import iaws.tblabsauzzya.ugmont.model.Salle;
 import iaws.tblabsauzzya.ugmont.service.UGmontBackendService;
 import org.jdom.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -20,33 +21,41 @@ import java.util.Set;
 public class TheatreSearchEndpoint {
 
 
-    public static final String NAMESPACE = "http://projectCobart/namespace";
-    private final UGmontBackendService service = UGmontBackendService.getInstance();
+    /**
+     * namespace for hadled XML.
+     */
+    public static final String NAMESPACE = "http://projectCobart/namespace/scheme";
+    /**
+     * BackEnd Service for Restful API.
+     */
+    @Autowired
+    private final UGmontBackendService service;
 
     /**
-     *
+     *Constructor.
      */
-    //@Autowired
-    /*public TheatreSearchEndpoint() {
+    public TheatreSearchEndpoint() {
         service = UGmontBackendService.getInstance();
-    }*/
+    }
 
     /**
-     * @param movie
-     * @return sallesList
-     * @throws SQLException
+     *@param movie .
+     *@return sallesList
+     *@throws SQLException .
      */
-    @PayloadRoot(localPart = "Movie", namespace = NAMESPACE)
+    @PayloadRoot(namespace = NAMESPACE, localPart = "MovieRequest")
     @ResponsePayload
-    public Element getSalleListHandler(@RequestPayload Element movie) throws SQLException {
+    public final Element getSalleListHandler(@RequestPayload
+                                                 final Element movie)
+            throws SQLException {
 
-        Element sallesList = new Element("SallesList", NAMESPACE);
+        Element sallesList = new Element("SallesListResponse", NAMESPACE);
 
         String filmId = movie.getChild("filmImdbId").getText();
         Set<Salle> salles = service.rechercheSalleAssocieeFilm(filmId);
 
         for (Iterator<Salle> it = salles.iterator(); it.hasNext();) {
-            Element newSalle = buildElement(it.next(), filmId, NAMESPACE);
+            Element newSalle = buildElement(it.next(), NAMESPACE);
             sallesList.addContent(newSalle);
         }
 
@@ -54,12 +63,12 @@ public class TheatreSearchEndpoint {
     }
 
     /**
-     * @param salle
-     * @param uri
-     * @param movieID
-     * @return
+     *@param salle .
+     *@param uri .
+     *@return newSalle
      */
-    private Element buildElement(Salle salle,String movieID ,String uri) {
+    private Element buildElement(final Salle salle,
+                                 final String uri) {
 
         //Creation elements
         Element newSalle = new Element("Salle", uri);
